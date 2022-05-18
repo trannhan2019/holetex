@@ -1,25 +1,26 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  Col,
-  Input,
-  Radio,
-  Row,
-  Select,
-  Tag,
-  Typography,
-} from 'antd';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Col, Input, Radio, Row, Select, Tag, Typography } from "antd";
 
-import { searchFilterChange } from '../../redux/filter/actions';
+import {
+  searchFilterChange,
+  statusFilterChange,
+} from "../../redux/filter/actions";
 
 const Filters = () => {
   const dispatch = useDispatch();
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [filterStatus, setFilterStatus] = useState("All");
 
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
     dispatch(searchFilterChange(e.target.value));
+  };
+
+  const handleStatusChange = (e) => {
+    setFilterStatus(e.target.value);
+    dispatch(statusFilterChange(e.target.value));
   };
 
   return (
@@ -27,7 +28,7 @@ const Filters = () => {
       <Col span={24}>
         <Typography.Paragraph
           style={{
-            fontWeight: 'bold',
+            fontWeight: "bold",
             marginBottom: 3,
             marginTop: 10,
           }}
@@ -44,14 +45,14 @@ const Filters = () => {
       <Col sm={24}>
         <Typography.Paragraph
           style={{
-            fontWeight: 'bold',
+            fontWeight: "bold",
             marginBottom: 3,
             marginTop: 10,
           }}
         >
           Filter By Status
         </Typography.Paragraph>
-        <Radio.Group>
+        <Radio.Group value={filterStatus} onChange={handleStatusChange}>
           <Radio value="All">All</Radio>
           <Radio value="Completed">Completed</Radio>
           <Radio value="Todo">To do</Radio>
@@ -61,7 +62,7 @@ const Filters = () => {
       <Col sm={24}>
         <Typography.Paragraph
           style={{
-            fontWeight: 'bold',
+            fontWeight: "bold",
             marginBottom: 3,
             marginTop: 10,
           }}
@@ -72,7 +73,7 @@ const Filters = () => {
           mode="multiple"
           allowClear
           placeholder="Please select"
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
         >
           <Select.Option value="High" label="High">
             <Tag color="red">High</Tag>
