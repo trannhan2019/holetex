@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Button, Col, Input, Row, Select, Tag } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
+import { useState } from "react";
+import { Button, Col, Input, Row, Select, Tag } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
-import Todo from '../Todo';
-import { todosRemainingSelector } from '../../redux/selectors';
-import { addTodo } from '../../redux/todo/actions';
+import Todo from "../Todo";
+import { todosRemainingSelector } from "../../redux/selectors";
+import { addTodo } from "../../redux/todo/actions";
 
 const TodoList = () => {
-  const [todoName, setTodoName] = useState('');
-  const [priority, setPriority] = useState('Medium');
+  const [todoName, setTodoName] = useState("");
+  const [priority, setPriority] = useState("Medium");
 
   const todoList = useSelector(todosRemainingSelector);
   console.log(todoList);
@@ -30,26 +30,25 @@ const TodoList = () => {
         completed: false,
       })
     );
-    setTodoName('');
-    setPriority('Medium');
+    setTodoName("");
+    setPriority("Medium");
   };
   return (
-    <Row style={{ height: 'calc(100% - 40px)' }}>
-      <Col
-        span={24}
-        style={{ height: 'calc(100% - 40px)', overflowY: 'auto' }}
-      >
+    <Row style={{ height: "calc(100% - 40px)" }}>
+      <Col span={24} style={{ height: "calc(100% - 40px)", overflowY: "auto" }}>
         {todoList.map((todo) => (
           <Todo
+            key={todo.id}
+            id={todo.id}
             name={todo.name}
             priority={todo.priority}
-            key={todo.id}
+            completed={todo.completed}
           />
         ))}
       </Col>
 
       <Col span={24}>
-        <Input.Group style={{ display: 'flex' }} compact>
+        <Input.Group style={{ display: "flex" }} compact>
           <Input onChange={handleInputChange} value={todoName} />
           <Select
             defaultValue="Medium"
