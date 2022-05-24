@@ -1,21 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const todoSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    completed: {
-      type: Boolean,
-      default: false,
-    },
-    priority: {
-      type: String,
-      default: 'Medium',
-    },
+const todoSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+  priority: {
+    type: String,
+    default: "Medium",
+  },
+});
 
-module.exports = mongoose.model('Todo', todoSchema);
+todoSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
+});
+
+module.exports = mongoose.model("Todo", todoSchema);
