@@ -30,6 +30,12 @@ const todosSlice = createSlice({
       })
       .addCase(addTodoThunk.fulfilled, (state, action) => {
         state.todos.push(action.payload);
+      })
+      .addCase(updateTodoThunk.fulfilled, (state, action) => {
+        let currentTodo = state.todos.find(
+          (todo) => todo.id === action.payload
+        );
+        currentTodo = action.payload;
       });
   },
 });
@@ -56,6 +62,24 @@ export const addTodoThunk = createAsyncThunk(
     //console.log(res);
     const data = await res.json();
     return data;
+  }
+);
+
+export const updateTodoThunk = createAsyncThunk(
+  "todos/updateTodoThunk",
+  async (updatedTodo) => {
+    const res = await fetch(`http://localhost:8000/v1/todos/${updatedTodo}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      //body: JSON.stringify(updatedTodo),
+    });
+
+    const data = await res.json();
+    console.log("[updateTodo]", { data });
+    return data.todos;
   }
 );
 

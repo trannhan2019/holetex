@@ -27,8 +27,21 @@ const todoController = {
   updateTodo: async (req, res) => {
     try {
       const id = req.params.id;
+      //console.log(id);
+      // const currentTodo = await Todo.findById(id);
+      Todo.findOneAndUpdate(
+        { _id: id },
+        { $set: { completed: !completed } },
+        { new: true },
+        (err, doc) => {
+          if (err) {
+            console.log("Something wrong when updating data!");
+          }
 
-      res.status(200).json(id);
+          console.log(doc);
+        }
+      );
+      res.status(200).json(currentTodo);
     } catch (error) {
       res.status(500).json(error);
     }
