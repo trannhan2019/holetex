@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import postRouter from "./routers/postRouter.js";
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ extended: true, limit: "30mb" }));
 
-//app.use("/posts");
+app.use("/posts", postRouter);
 app.get("/", (req, res) => {
   res.send("hello");
 });
